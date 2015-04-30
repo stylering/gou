@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'D:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'D:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'sjsx-loader',
+1 verbose cli   '--save-dev' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.36
+4 verbose node symlink D:\Program Files (x86)\nodejs\\node.exe
+5 warn package.json gou@1.0.0 No repository field.
+6 warn package.json gou@1.0.0 No README data
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'sjsx-loader', null ]
+9 verbose cache add name=undefined spec="sjsx-loader" args=["sjsx-loader",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'sjsx-loader',
+10 verbose parsed url   path: 'sjsx-loader',
+10 verbose parsed url   href: 'sjsx-loader' }
+11 silly lockFile 989ecf4c-sjsx-loader sjsx-loader
+12 verbose lock sjsx-loader C:\Users\liuxl\AppData\Roaming\npm-cache\989ecf4c-sjsx-loader.lock
+13 silly lockFile 989ecf4c-sjsx-loader sjsx-loader
+14 silly lockFile 989ecf4c-sjsx-loader sjsx-loader
+15 verbose addNamed [ 'sjsx-loader', '' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile 16ee4a36-sjsx-loader sjsx-loader@
+18 verbose lock sjsx-loader@ C:\Users\liuxl\AppData\Roaming\npm-cache\16ee4a36-sjsx-loader.lock
+19 silly addNameRange { name: 'sjsx-loader', range: '*', hasData: false }
+20 verbose request where is /sjsx-loader
+21 verbose request registry https://registry.npm.taobao.org/
+22 verbose request id 8b5bd94e204de1e4
+23 verbose url raw /sjsx-loader
+24 verbose url resolving [ 'https://registry.npm.taobao.org/', './sjsx-loader' ]
+25 verbose url resolved https://registry.npm.taobao.org/sjsx-loader
+26 verbose request where is https://registry.npm.taobao.org/sjsx-loader
+27 info trying registry request attempt 1 at 18:14:45
+28 http GET https://registry.npm.taobao.org/sjsx-loader
+29 http 404 https://registry.npm.taobao.org/sjsx-loader
+30 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+30 verbose headers   'content-type': 'application/json',
+30 verbose headers   'cache-control': 'max-age=0',
+30 verbose headers   'content-length': '51',
+30 verbose headers   'accept-ranges': 'bytes',
+30 verbose headers   date: 'Wed, 29 Apr 2015 10:14:58 GMT',
+30 verbose headers   via: '1.1 varnish',
+30 verbose headers   connection: 'keep-alive',
+30 verbose headers   'x-served-by': 'cache-hkg6823-HKG',
+30 verbose headers   'x-cache': 'MISS',
+30 verbose headers   'x-cache-hits': '0',
+30 verbose headers   'x-timer': 'S1430302497.699768,VS0,VE630' }
+31 silly registry.get cb [ 404,
+31 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+31 silly registry.get     'content-type': 'application/json',
+31 silly registry.get     'cache-control': 'max-age=0',
+31 silly registry.get     'content-length': '51',
+31 silly registry.get     'accept-ranges': 'bytes',
+31 silly registry.get     date: 'Wed, 29 Apr 2015 10:14:58 GMT',
+31 silly registry.get     via: '1.1 varnish',
+31 silly registry.get     connection: 'keep-alive',
+31 silly registry.get     'x-served-by': 'cache-hkg6823-HKG',
+31 silly registry.get     'x-cache': 'MISS',
+31 silly registry.get     'x-cache-hits': '0',
+31 silly registry.get     'x-timer': 'S1430302497.699768,VS0,VE630' } ]
+32 silly lockFile 16ee4a36-sjsx-loader sjsx-loader@
+33 silly lockFile 16ee4a36-sjsx-loader sjsx-loader@
+34 error 404 404 Not Found: sjsx-loader
+34 error 404
+34 error 404 'sjsx-loader' is not in the npm registry.
+34 error 404 You should bug the author to publish it
+34 error 404 It was specified as a dependency of 'gou'
+34 error 404
+34 error 404 Note that you can also install from a
+34 error 404 tarball, folder, or http url, or git url.
+35 error System Windows_NT 6.1.7601
+36 error command "D:\\Program Files (x86)\\nodejs\\\\node.exe" "D:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "sjsx-loader" "--save-dev"
+37 error cwd E:\notes\gou
+38 error node -v v0.10.36
+39 error npm -v 1.4.28
+40 error code E404
+41 verbose exit [ 1, true ]
