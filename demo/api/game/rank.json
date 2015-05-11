@@ -1,0 +1,42 @@
+{
+    "success": true,
+    "msg": "",
+    "data": {
+        "list": [
+            {
+                "rank": 1,
+                "name": "李白",
+                "expend": "10:54"
+            },
+            {
+                "rank": 2,
+                "name": "李白",
+                "expend": "10:54"
+            },
+            {
+                "rank": 3,
+                "name": "李白",
+                "expend": "10:54"
+            },
+            {
+            	"isEllipsis": true
+            },
+            {
+                "rank": 100,
+                "name": "李白",
+                "expend": "10:54"
+            },
+            {
+            	"isCurrent": true,
+            	"rank": 101,
+            	"name": "李白",
+            	"expend": "10:54"
+            },
+            {
+                "rank": 102,
+                "name": "李白",
+                "expend": "10:54"
+            }
+        ]
+    }
+}

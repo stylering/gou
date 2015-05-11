@@ -89,7 +89,7 @@ gulp.task('watch', function() {
         var pathName = event.path;
         var fileName = pathName.substr(pathName.lastIndexOf('\\') +1);
         var name = fileName.match(/(.*)\.source\.styl/)[1];
-        
+        console.log(name);
         return gulp.src(pathName)
                 .pipe(plumber({errorHandler: errorHandler}))
                 .pipe(stylus())

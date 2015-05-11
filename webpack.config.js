@@ -11,8 +11,9 @@ var config = {
 		this.module.noParse.push(new RegExp('^' + name + '$'));
 	},
 	entry: {
-		home: './assets/js/home.js',
-		'lib-commons': ['react', 'zepto']
+		home: './assets/js/module/home.js',
+		game: './assets/js/module/game.js',
+		'lib-commons': ['react', 'zepto', 'object-assign']
 	},
 	output: {
 		path: __dirname + '/assets/build',
@@ -35,5 +36,6 @@ var config = {
 
 config.addVendor('react', bower_dir + '/react/react.js');
 config.addVendor('zepto', bower_dir + '/zepto/zepto.js');
+config.addVendor('object-assign', './assets/js/common/object-assign.js');
 
 module.exports = config;
