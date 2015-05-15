@@ -4,7 +4,7 @@ webpackJsonp([2],[
 
 	var React = __webpack_require__(1),
 		zepto = __webpack_require__(2),
-		Rank = __webpack_require__(4)
+		Rank = __webpack_require__(6)
 		;
 
 	React.render(
@@ -16,13 +16,15 @@ webpackJsonp([2],[
 /* 1 */,
 /* 2 */,
 /* 3 */,
-/* 4 */
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
-		Header = __webpack_require__(5),
-		RankTop = __webpack_require__(8),
-		RankList = __webpack_require__(9);
+		Header = __webpack_require__(7),
+		RankTop = __webpack_require__(10),
+		RankList = __webpack_require__(11);
 
 	var Rank = React.createClass({displayName: "Rank",
 
@@ -44,7 +46,7 @@ webpackJsonp([2],[
 	module.exports = Rank;
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
@@ -68,9 +70,9 @@ webpackJsonp([2],[
 	module.exports = Header;
 
 /***/ },
-/* 6 */,
-/* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
@@ -96,12 +98,12 @@ webpackJsonp([2],[
 	module.exports = RankTop;
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
-		GameAPI = __webpack_require__(12),
-		GameStore = __webpack_require__(13);
+		GameAPI = __webpack_require__(15),
+		GameStore = __webpack_require__(16);
 
 	GameAPI.getRankList();
 
@@ -198,13 +200,14 @@ webpackJsonp([2],[
 	module.exports = RankList;
 
 /***/ },
-/* 10 */,
-/* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var GameAction = __webpack_require__(17);
-	var utils = __webpack_require__(18);
+	var GameAction = __webpack_require__(21);
+	var utils = __webpack_require__(4);
 
 	module.exports = {
 
@@ -223,12 +226,12 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 13 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15),
-		EventEmitter = __webpack_require__(16).EventEmitter,
+	var AppDispatcher = __webpack_require__(17),
+		Constants = __webpack_require__(18),
+		EventEmitter = __webpack_require__(20).EventEmitter,
 		assign = __webpack_require__(3);
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -268,18 +271,18 @@ webpackJsonp([2],[
 	module.exports = GameStore;
 
 /***/ },
-/* 14 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(20).Dispatcher;
+	var Dispatcher = __webpack_require__(23).Dispatcher;
 
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keyMirror = __webpack_require__(19);
+	var keyMirror = __webpack_require__(22);
 
 	module.exports = {
 
@@ -295,7 +298,8 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 16 */
+/* 19 */,
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -602,11 +606,11 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 17 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15)
+	var AppDispatcher = __webpack_require__(17),
+		Constants = __webpack_require__(18)
 		;
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -623,27 +627,7 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-
-		parse: function (args) {
-			try {
-				return JSON.parse(args);
-			} catch (e) {
-				return args;
-			}
-		},
-
-		stringify: function(args) {
-			return JSON.stringify(args);
-		}
-
-	}
-
-/***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keyMirror = function(obj) {
@@ -664,7 +648,7 @@ webpackJsonp([2],[
 	module.exports = keyMirror;
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -676,11 +660,11 @@ webpackJsonp([2],[
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(21)
+	module.exports.Dispatcher = __webpack_require__(24)
 
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -697,7 +681,7 @@ webpackJsonp([2],[
 
 	"use strict";
 
-	var invariant = __webpack_require__(22);
+	var invariant = __webpack_require__(25);
 
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -936,7 +920,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

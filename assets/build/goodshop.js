@@ -3,9 +3,9 @@ webpackJsonp([3],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var Header = __webpack_require__(5);
-	var Tags = __webpack_require__(6);
-	var Shops = __webpack_require__(7);
+	var Header = __webpack_require__(7);
+	var Tags = __webpack_require__(8);
+	var Shops = __webpack_require__(9);
 
 	var GoodShop = React.createClass({displayName: "GoodShop",
 		render: function() {
@@ -33,7 +33,9 @@ webpackJsonp([3],[
 /* 2 */,
 /* 3 */,
 /* 4 */,
-/* 5 */
+/* 5 */,
+/* 6 */,
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
@@ -57,12 +59,12 @@ webpackJsonp([3],[
 	module.exports = Header;
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var TagsStore = __webpack_require__(10);
-	var GoodShopAPI = __webpack_require__(23);
+	var TagsStore = __webpack_require__(12);
+	var GoodShopAPI = __webpack_require__(13);
 
 	GoodShopAPI.getTags();
 
@@ -119,13 +121,13 @@ webpackJsonp([3],[
 	module.exports = Tags;
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ShopsStore = __webpack_require__(11);
-	var GoodShopAPI = __webpack_require__(23);
-	var InfiniteScroll = __webpack_require__(25)(React);
+	var ShopsStore = __webpack_require__(14);
+	var GoodShopAPI = __webpack_require__(13);
+	var InfiniteScroll = __webpack_require__(5)(React);
 
 	GoodShopAPI.getShops();
 
@@ -202,14 +204,14 @@ webpackJsonp([3],[
 	module.exports = Shops;
 
 /***/ },
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15),
-		EventEmitter = __webpack_require__(16).EventEmitter,
+	var AppDispatcher = __webpack_require__(17),
+		Constants = __webpack_require__(18),
+		EventEmitter = __webpack_require__(20).EventEmitter,
 		assign = __webpack_require__(3);
 
 	var ActionTypes = Constants.GoodshopActionTypes;
@@ -249,12 +251,48 @@ webpackJsonp([3],[
 	module.exports = TagsStore;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15),
-		EventEmitter = __webpack_require__(16).EventEmitter,
+	var utils = __webpack_require__(4);
+	var GoodshopAction = __webpack_require__(19);
+
+	module.exports = {
+
+		getTags: function() {
+			$.ajax({
+				url: '/gou/demo/api/goodshop/tag.json',
+				dataType: 'JSON',
+				success: function(result) {
+					result = utils.parse(result);
+					if (result.success) {
+						GoodshopAction.receiveTags(result.data);
+					}
+				}
+			})
+		},
+
+		getShops: function() {
+			$.ajax({
+				url: '/gou/demo/api/goodshop/index.json',
+				dataType: 'JSON',
+				success: function(result) {
+					result = utils.parse(result);
+					if (result.success) {
+						GoodshopAction.receiveShops(result.data);
+					}
+				}
+			})
+		}
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(17),
+		Constants = __webpack_require__(18),
+		EventEmitter = __webpack_require__(20).EventEmitter,
 		assign = __webpack_require__(3);
 
 	var ActionTypes = Constants.GoodshopActionTypes;
@@ -294,20 +332,20 @@ webpackJsonp([3],[
 	module.exports = ShopsStore;
 
 /***/ },
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(20).Dispatcher;
+	var Dispatcher = __webpack_require__(23).Dispatcher;
 
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keyMirror = __webpack_require__(19);
+	var keyMirror = __webpack_require__(22);
 
 	module.exports = {
 
@@ -323,7 +361,36 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 16 */
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(17),
+		Constants = __webpack_require__(18)
+		;
+
+	var ActionTypes = Constants.GoodshopActionTypes;
+
+	module.exports = {
+		
+		receiveTags: function(tags) {
+
+			AppDispatcher.dispatch({
+				type: ActionTypes.RECEIVE_TAGS,
+				data: tags
+			})
+		},
+
+		receiveShops: function(shops) {
+			AppDispatcher.dispatch({
+				type: ActionTypes.RECEIVE_SHOPS,
+				data: shops
+			})
+
+		}
+	}
+
+/***/ },
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -630,28 +697,8 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 17 */,
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-
-		parse: function (args) {
-			try {
-				return JSON.parse(args);
-			} catch (e) {
-				return args;
-			}
-		},
-
-		stringify: function(args) {
-			return JSON.stringify(args);
-		}
-
-	}
-
-/***/ },
-/* 19 */
+/* 21 */,
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keyMirror = function(obj) {
@@ -672,7 +719,7 @@ webpackJsonp([3],[
 	module.exports = keyMirror;
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -684,11 +731,11 @@ webpackJsonp([3],[
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(21)
+	module.exports.Dispatcher = __webpack_require__(24)
 
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -705,7 +752,7 @@ webpackJsonp([3],[
 
 	"use strict";
 
-	var invariant = __webpack_require__(22);
+	var invariant = __webpack_require__(25);
 
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -944,7 +991,7 @@ webpackJsonp([3],[
 
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1001,139 +1048,6 @@ webpackJsonp([3],[
 
 	module.exports = invariant;
 
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var utils = __webpack_require__(18);
-	var GoodshopAction = __webpack_require__(24);
-
-	module.exports = {
-
-		getTags: function() {
-			$.ajax({
-				url: '/gou/demo/api/goodshop/tag.json',
-				dataType: 'JSON',
-				success: function(result) {
-					result = utils.parse(result);
-					if (result.success) {
-						GoodshopAction.receiveTags(result.data);
-					}
-				}
-			})
-		},
-
-		getShops: function() {
-			$.ajax({
-				url: '/gou/demo/api/goodshop/index.json',
-				dataType: 'JSON',
-				success: function(result) {
-					result = utils.parse(result);
-					if (result.success) {
-						GoodshopAction.receiveShops(result.data);
-					}
-				}
-			})
-		}
-	}
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15)
-		;
-
-	var ActionTypes = Constants.GoodshopActionTypes;
-
-	module.exports = {
-		
-		receiveTags: function(tags) {
-
-			AppDispatcher.dispatch({
-				type: ActionTypes.RECEIVE_TAGS,
-				data: tags
-			})
-		},
-
-		receiveShops: function(shops) {
-			AppDispatcher.dispatch({
-				type: ActionTypes.RECEIVE_SHOPS,
-				data: shops
-			})
-
-		}
-	}
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	function topPosition(domElt) {
-	  if (!domElt) {
-	    return 0;
-	  }
-	  return domElt.offsetTop + topPosition(domElt.offsetParent);
-	}
-
-	module.exports = function (React) {
-	  if (React.addons && React.addons.InfiniteScroll) {
-	    return React.addons.InfiniteScroll;
-	  }
-	  React.addons = React.addons || {};
-	  var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({displayName: "React.addons.InfiniteScroll",
-	    getDefaultProps: function () {
-	      return {
-	        pageStart: 0,
-	        hasMore: false,
-	        loadMore: function () {},
-	        threshold: 250
-	      };
-	    },
-	    componentDidMount: function () {
-	      this.pageLoaded = this.props.pageStart;
-	      this.attachScrollListener();
-	    },
-	    componentDidUpdate: function () {
-	      this.attachScrollListener();
-	    },
-	    render: function () {
-	      var props = this.props;
-	      return React.DOM.div(null, props.children, props.hasMore && (props.loader || InfiniteScroll._defaultLoader));
-	    },
-	    scrollListener: function () {
-	      var el = this.getDOMNode();
-	      var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-	      if (topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold)) {
-	        this.detachScrollListener();
-	        // call loadMore after detachScrollListener to allow
-	        // for non-async loadMore functions
-	        this.props.loadMore(this.pageLoaded += 1);
-	      }
-	    },
-	    attachScrollListener: function () {
-	      if (!this.props.hasMore) {
-	        return;
-	      }
-	      window.addEventListener('scroll', this.scrollListener);
-	      window.addEventListener('resize', this.scrollListener);
-	      this.scrollListener();
-	    },
-	    detachScrollListener: function () {
-	      window.removeEventListener('scroll', this.scrollListener);
-	      window.removeEventListener('resize', this.scrollListener);
-	    },
-	    componentWillUnmount: function () {
-	      this.detachScrollListener();
-	    }
-	  });
-	  InfiniteScroll.setDefaultLoader = function (loader) {
-	    InfiniteScroll._defaultLoader = loader;
-	  };
-	  return InfiniteScroll;
-	};
 
 /***/ }
 ]);
