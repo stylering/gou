@@ -1,3 +1,13 @@
+.layout-center {
+  width: 16rem;
+  margin: 0 auto;
+}
+.align-left {
+  text-align: left;
+}
+.relative {
+  position: relative;
+}
 .ico-list {
   width: 16rem;
   margin: 0 auto;
@@ -50,7 +60,9 @@
 }
 .pic-list .desc {
   background: #fff;
-  box-shadow: 0 1px 1px #cfd3d4;
+  -webkit-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   word-break: break-word;
   color: #8c8c8c;
   padding: 0.5rem 0.8rem;
@@ -190,6 +202,7 @@
 }
 .goods-list li {
   margin-bottom: 0.6rem;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
   border: solid 1px #d9d9d9;
   color: #969696;
@@ -217,7 +230,8 @@
   width: 100%;
 }
 .goods-list .web-btn a {
-  border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
 }
 .ad-pic {
   width: 16rem;
@@ -619,7 +633,9 @@ wrapmall {
   width: 16rem;
   margin: 0 auto 0.3rem;
   background-color: #fff;
-  box-shadow: 0 1px 3px 0 #d5d4d4;
+  -webkit-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
 }
 .brand-desc .pic {
   display: inline-block;
@@ -730,6 +746,7 @@ wrapmall {
   width: 14rem;
   font-size: 14px;
   color: #b9b9b9;
+  -webkit-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
@@ -965,40 +982,40 @@ wrapscrolllist {
   color: #f63;
 }
 /****************** 春节专题样式 start **************************/
-.spring-day-wrap {
+.activity-theme-wrap {
   width: 16rem;
   margin: 0 auto;
-  height: 4.6rem;
-  background: url("../img/spring-day-top.jpg") no-repeat 0 0;
+  height: 4.8rem;
+  background: url("../img/activity-theme-header.jpg") no-repeat 0 0;
   background-size: 100% 100%;
   position: relative;
   overflow: hidden;
 }
-.spring-day-wrap .search {
+.activity-theme-wrap .search {
   position: absolute;
-  top: 1.25rem;
-  right: 0.35rem;
-  width: 8.25rem;
-  height: 1.8rem;
+  top: 0.75rem;
+  right: 1.5rem;
+  width: 7rem;
+  height: 2rem;
 }
-.spring-day-wrap .nav {
+.activity-theme-wrap .nav {
   display: -webkit-box;
   display: box;
   display: -webkit-flex;
   display: flex;
   list-style: none;
   position: absolute;
-  bottom: 0.1rem;
+  bottom: 0.3rem;
   left: 0;
   right: 0;
 }
-.spring-day-wrap .nav li {
+.activity-theme-wrap .nav li {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   width: 33.333%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0 0.25rem;
+  margin: 0 0.4rem;
 /*&:nth-of-type(1) {
 				a, span {
 					background: url(../img/year-style-home.png) 0 0;
@@ -1036,8 +1053,8 @@ wrapscrolllist {
 				}
 			}*/
 }
-.spring-day-wrap .nav li a,
-.spring-day-wrap .nav li span {
+.activity-theme-wrap .nav li a,
+.activity-theme-wrap .nav li span {
   height: 1.33333rem;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -1046,14 +1063,14 @@ wrapscrolllist {
   text-align: center;
   font-size: 0.7rem;
   font-weight: bold;
-  color: #95cc16;
+  color: #f34259;
 }
-.spring-day-wrap .nav li.selected {
-  border-bottom: 2px solid #95cc16;
+.activity-theme-wrap .nav li.selected {
+  border-bottom: 2px solid #6d0a17;
 }
-.spring-day-wrap .nav li.selected a,
-.spring-day-wrap .nav li.selected span {
-  color: #f8b015;
+.activity-theme-wrap .nav li.selected a,
+.activity-theme-wrap .nav li.selected span {
+  color: #6d0a17;
 }
 #home .tj-webapp,
 #cod .tj-webapp,
@@ -1069,8 +1086,23 @@ wrapscrolllist {
 #home .tj-webapp > ul,
 #cod .tj-webapp > ul,
 #bargain .tj-webapp > ul {
-  background: url("../img/spring-day-bg.jpg") 0 0 no-repeat;
-  background-size: 100%;
+  background: #8ad6d8;
+}
+#home .tj-webapp > ul li:nth-of-type(1),
+#cod .tj-webapp > ul li:nth-of-type(1),
+#bargain .tj-webapp > ul li:nth-of-type(1),
+#home .tj-webapp > ul li:nth-of-type(2),
+#cod .tj-webapp > ul li:nth-of-type(2),
+#bargain .tj-webapp > ul li:nth-of-type(2) {
+  margin-top: 0;
+}
+#home .tj-webapp > ul li:nth-of-type(3),
+#cod .tj-webapp > ul li:nth-of-type(3),
+#bargain .tj-webapp > ul li:nth-of-type(3),
+#home .tj-webapp > ul li:nth-of-type(4),
+#cod .tj-webapp > ul li:nth-of-type(4),
+#bargain .tj-webapp > ul li:nth-of-type(4) {
+  margin-bottom: 0.2rem;
 }
 #home .amigo-mall,
 #cod .amigo-mall,

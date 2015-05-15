@@ -1,49 +1,38 @@
-webpackJsonp([2],[
+webpackJsonp([3],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1),
-		zepto = __webpack_require__(2),
-		Rank = __webpack_require__(4)
-		;
+	var React = __webpack_require__(1);
+	var Header = __webpack_require__(5);
+	var Tags = __webpack_require__(6);
+	var Shops = __webpack_require__(7);
 
-	React.render(
-		React.createElement(Rank, null),
-		$('body')[0]
-	)
-
-/***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1),
-		Header = __webpack_require__(5),
-		RankTop = __webpack_require__(8),
-		RankList = __webpack_require__(9);
-
-	var Rank = React.createClass({displayName: "Rank",
-
+	var GoodShop = React.createClass({displayName: "GoodShop",
 		render: function() {
 			return (
 				React.createElement("div", {className: "module"}, 
 					React.createElement(Header, {title: "排行榜", href: "/"}), 
 					React.createElement("section", {className: "layout-center"}, 
-						React.createElement(RankTop, null)
+						React.createElement(Tags, null)
 					), 
 					React.createElement("section", {className: "layout-center"}, 
-						React.createElement(RankList, null)
+						React.createElement(Shops, null)
 					)
 				)
 			)
 		}
 	})
 
-	module.exports = Rank;
+	React.render(
+		React.createElement(GoodShop, null),
+		document.getElementsByTagName('body')[0]
+	)
 
 /***/ },
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -68,162 +57,154 @@ webpackJsonp([2],[
 	module.exports = Header;
 
 /***/ },
-/* 6 */,
-/* 7 */,
-/* 8 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1)
-		;
+	var React = __webpack_require__(1);
+	var TagsStore = __webpack_require__(10);
+	var GoodShopAPI = __webpack_require__(23);
 
-	var RankTop = React.createClass({displayName: "RankTop",
-		render: function() {
-			return (
-				React.createElement("div", {className: "cut-rank-top"}, 
-					React.createElement("div", {className: "inner"}, 
-						React.createElement("span", {className: "period"}, "第5期："), 
-						React.createElement("h2", null, "韩国QQ牌拉杆箱14寸灰色"), 
-						React.createElement("div", {className: "date"}, 
-							React.createElement("div", {className: "timer"}), 
-							React.createElement("span", null, "今天10:00-18:00")
-						)
-					)
-				)
-			)
+	GoodShopAPI.getTags();
+
+	function getTags() {
+		return {
+			tags: TagsStore.getAll()
 		}
-	})
+	}
 
-	module.exports = RankTop;
+	function tagsIterator(tag) {
+		return (
+			React.createElement(Tag, {tag: tag})
+		)
+	}
 
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1)
-		GameAPI = __webpack_require__(12),
-		GameStore = __webpack_require__(13);
-
-	GameAPI.getRankList();
-
-	var EllipsisItem = React.createClass({displayName: "EllipsisItem",
+	var Tag = React.createClass({displayName: "Tag",
 		render: function() {
 			return (
-				React.createElement("li", {className: "item ellipsis-text"}, 
-					React.createElement("span", null), 
-					React.createElement("span", null), 
-					React.createElement("span", null)
-				)
+				React.createElement("li", null, React.createElement("a", {href: "javascipt:void(0);"}, this.props.tag))
 			)
 		}
 	});
 
-	var Item = React.createClass({displayName: "Item",
+	var Tags = React.createClass({displayName: "Tags",
+
+		getInitialState: function() {
+			return getTags();
+		},
 
 		render: function() {
-
-			var dataList = this.props.dataList,
-				statusClass = 'item',
-				current = '',
-				rank = this.props.dataList.rank,
-				expend = this.props.dataList.expend;
-
-			if (dataList['win']) {
-				statusClass = 'item win';
-				rank = React.createElement("span", {className: "cup"});
-				expend = React.createElement("span", {className: "strong"}, this.props.dataList.expend);
-			} else if (dataList['current']) {
-				statusClass = 'item current';
-				current = React.createElement("div", {className: "circle-text"}, "您在此");
-			}
-
+			var tags = this.state.tags.map(tagsIterator);
 			return (
-				React.createElement("li", {className: statusClass}, 
-					current, 
-					React.createElement("ul", null, 
-						React.createElement("li", null, rank), 
-						React.createElement("li", null, this.props.dataList.name), 
-						React.createElement("li", null, expend)
+				React.createElement("div", {className: "slide-tab-box"}, 
+					React.createElement("ul", {id: "J_slideTab", className: "slide-tab"}, 
+						tags
 					)
 				)
 			)
-		}
-	})
-
-	function getRankList() {
-		return {
-			rankList: GameStore.getAll()
-		}
-	}
-
-	function getRankItem (list) {
-		if (list['ellipsis-text']) {
-			return (
-				React.createElement(EllipsisItem, null)
-			)
-		}
-
-		return (
-			React.createElement(Item, {dataList: list})
-		)
-	}
-
-	var RankList = React.createClass({displayName: "RankList",
-
-		getInitialState: function() {
-			return getRankList();
 		},
 
 		componentDidMount: function() {
-			GameStore.addChangeListener(this._onChange);
+			TagsStore.addChangeListener(this._onChange);
 		},
 
 		componentWillUnmount: function() {
-			GameStore.removeChangeListener(this._onChange);
+			TagsStore.removeChangeListener(this._onChange);
+		},
+
+		_onChange: function() {
+			this.setState(getTags());
+		}
+	})
+
+	module.exports = Tags;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ShopsStore = __webpack_require__(11);
+	var GoodShopAPI = __webpack_require__(23);
+	var InfiniteScroll = __webpack_require__(25)(React);
+
+	GoodShopAPI.getShops();
+
+	function getShops() {
+		return {
+			shops: ShopsStore.getAll()
+		}
+	}
+
+	var Shops = React.createClass({displayName: "Shops",
+
+		getInitialState: function() {
+			return getShops();
 		},
 
 		render: function() {
-			var rankItems = this.state.rankList.map(getRankItem);
+			var i = 0;
+			var loadFunc = function() {
+				console.log(++i);
+			}
+
+			var shops = this.state.shops;
+
 			return (
-				React.createElement("ul", {className: "cut-rank-list"}, 
-					rankItems
+				React.createElement(InfiniteScroll, {
+					pageStart: "0", 
+					loadMore: loadFunc, 
+					hasMore: true, 
+					loader: React.createElement("div", {className: "loader"}, "loading...")}, 
+				
+					shops.map(function(shop){
+						return (
+							React.createElement("div", {className: "goodshop"}, 
+								React.createElement("i", {className: "serial ico-serial"}, shop.num), 
+								React.createElement("div", {className: "cont"}, 
+									React.createElement("div", {className: "header"}, 
+										React.createElement("div", {className: "logo"}, 
+											React.createElement("img", {src: shop.logo})
+										), 
+										React.createElement("a", {href: shop.url, className: "intro"}, 
+											React.createElement("h2", null, shop.title), 
+											React.createElement("p", null)
+										), 
+										React.createElement("div", {className: "aside J_aside"})
+									), 
+									React.createElement("a", {href: shop.url}, 
+										React.createElement("ul", {className: "pics"}, 
+											React.createElement("li", null, React.createElement("img", {src: shop.goods[0]})), 
+											React.createElement("li", null, React.createElement("img", {src: shop.goods[1]})), 
+											React.createElement("li", null, React.createElement("img", {src: shop.goods[2]}))
+										)
+									)
+								)
+							)
+						)
+					})
 				)
 			)
 		},
 
+		componentDidMount: function() {
+			ShopsStore.addChangeListener(this._onChange);
+		},
+
+		componentWillUnmount: function() {
+			ShopsStore.removeChangeListener(this._onChange);
+		},
+
 		_onChange: function() {
-			this.setState(getRankList());
+			this.setState(getShops());
 		}
 	})
 
-	module.exports = RankList;
+	module.exports = Shops;
 
 /***/ },
-/* 10 */,
-/* 11 */,
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var GameAction = __webpack_require__(17);
-	var utils = __webpack_require__(18);
-
-	module.exports = {
-
-		getRankList: function() {
-			$.ajax({
-				url: '/gou/demo/api/game/rank.json',
-				dataType: 'JSON',
-				success: function(result) {
-					result = utils.parse(result);
-					if (result.success) {
-						GameAction.receiveRankList(result.data);
-					}
-				}
-			})
-		}
-	}
-
-/***/ },
-/* 13 */
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(14),
@@ -231,11 +212,11 @@ webpackJsonp([2],[
 		EventEmitter = __webpack_require__(16).EventEmitter,
 		assign = __webpack_require__(3);
 
-	var ActionTypes = Constants.GameActionTypes;
-	var _rankList = [];
+	var ActionTypes = Constants.GoodshopActionTypes;
+	var _Tags = [];
 	var CHANGE_EVENT = 'change';
 
-	var GameStore = assign({}, EventEmitter.prototype, {
+	var TagsStore = assign({}, EventEmitter.prototype, {
 
 		emitChange: function() {
 			this.emit(CHANGE_EVENT);
@@ -250,24 +231,71 @@ webpackJsonp([2],[
 		},
 
 		getAll: function() {
-			return _rankList;
+			return _Tags;
 		}
 
 	});
 
-	GameStore.dispatcher = AppDispatcher.register(function(action) {
+	TagsStore.dispatcher = AppDispatcher.register(function(action) {
 
 		switch (action.type) {
-			case ActionTypes.RECEIVE_RANK_LIST:
-				_rankList = action.data.list;
-				GameStore.emitChange();
+			case ActionTypes.RECEIVE_TAGS:
+				_Tags = action.data.list;
+				TagsStore.emitChange();
 				break;
 		}
 	})
 
-	module.exports = GameStore;
+	module.exports = TagsStore;
 
 /***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(14),
+		Constants = __webpack_require__(15),
+		EventEmitter = __webpack_require__(16).EventEmitter,
+		assign = __webpack_require__(3);
+
+	var ActionTypes = Constants.GoodshopActionTypes;
+	var _shops = [];
+	var CHANGE_EVENT = 'change';
+
+	var ShopsStore = assign({}, EventEmitter.prototype, {
+
+		emitChange: function() {
+			this.emit(CHANGE_EVENT);
+		},
+
+		addChangeListener: function(callback) {
+			this.on(CHANGE_EVENT, callback);
+		},
+
+		removeChangeListener: function(callback) {
+			this.removeListener(CHANGE_EVENT, callback);
+		},
+
+		getAll: function() {
+			return _shops;
+		}
+
+	});
+
+	ShopsStore.dispatcher = AppDispatcher.register(function(action) {
+
+		switch (action.type) {
+			case ActionTypes.RECEIVE_SHOPS:
+				_shops = _shops.concat(action.data.list);
+				ShopsStore.emitChange();
+				break;
+		}
+	})
+
+	module.exports = ShopsStore;
+
+/***/ },
+/* 12 */,
+/* 13 */,
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -602,27 +630,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(14),
-		Constants = __webpack_require__(15)
-		;
-
-	var ActionTypes = Constants.GameActionTypes;
-
-	module.exports = {
-		receiveRankList: function(rankList) {
-
-			AppDispatcher.dispatch({
-				type: ActionTypes.RECEIVE_RANK_LIST,
-				data: rankList
-			})
-
-		}
-	}
-
-/***/ },
+/* 17 */,
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -993,6 +1001,139 @@ webpackJsonp([2],[
 
 	module.exports = invariant;
 
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var utils = __webpack_require__(18);
+	var GoodshopAction = __webpack_require__(24);
+
+	module.exports = {
+
+		getTags: function() {
+			$.ajax({
+				url: '/gou/demo/api/goodshop/tag.json',
+				dataType: 'JSON',
+				success: function(result) {
+					result = utils.parse(result);
+					if (result.success) {
+						GoodshopAction.receiveTags(result.data);
+					}
+				}
+			})
+		},
+
+		getShops: function() {
+			$.ajax({
+				url: '/gou/demo/api/goodshop/index.json',
+				dataType: 'JSON',
+				success: function(result) {
+					result = utils.parse(result);
+					if (result.success) {
+						GoodshopAction.receiveShops(result.data);
+					}
+				}
+			})
+		}
+	}
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(14),
+		Constants = __webpack_require__(15)
+		;
+
+	var ActionTypes = Constants.GoodshopActionTypes;
+
+	module.exports = {
+		
+		receiveTags: function(tags) {
+
+			AppDispatcher.dispatch({
+				type: ActionTypes.RECEIVE_TAGS,
+				data: tags
+			})
+		},
+
+		receiveShops: function(shops) {
+			AppDispatcher.dispatch({
+				type: ActionTypes.RECEIVE_SHOPS,
+				data: shops
+			})
+
+		}
+	}
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	function topPosition(domElt) {
+	  if (!domElt) {
+	    return 0;
+	  }
+	  return domElt.offsetTop + topPosition(domElt.offsetParent);
+	}
+
+	module.exports = function (React) {
+	  if (React.addons && React.addons.InfiniteScroll) {
+	    return React.addons.InfiniteScroll;
+	  }
+	  React.addons = React.addons || {};
+	  var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({displayName: "React.addons.InfiniteScroll",
+	    getDefaultProps: function () {
+	      return {
+	        pageStart: 0,
+	        hasMore: false,
+	        loadMore: function () {},
+	        threshold: 250
+	      };
+	    },
+	    componentDidMount: function () {
+	      this.pageLoaded = this.props.pageStart;
+	      this.attachScrollListener();
+	    },
+	    componentDidUpdate: function () {
+	      this.attachScrollListener();
+	    },
+	    render: function () {
+	      var props = this.props;
+	      return React.DOM.div(null, props.children, props.hasMore && (props.loader || InfiniteScroll._defaultLoader));
+	    },
+	    scrollListener: function () {
+	      var el = this.getDOMNode();
+	      var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+	      if (topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold)) {
+	        this.detachScrollListener();
+	        // call loadMore after detachScrollListener to allow
+	        // for non-async loadMore functions
+	        this.props.loadMore(this.pageLoaded += 1);
+	      }
+	    },
+	    attachScrollListener: function () {
+	      if (!this.props.hasMore) {
+	        return;
+	      }
+	      window.addEventListener('scroll', this.scrollListener);
+	      window.addEventListener('resize', this.scrollListener);
+	      this.scrollListener();
+	    },
+	    detachScrollListener: function () {
+	      window.removeEventListener('scroll', this.scrollListener);
+	      window.removeEventListener('resize', this.scrollListener);
+	    },
+	    componentWillUnmount: function () {
+	      this.detachScrollListener();
+	    }
+	  });
+	  InfiniteScroll.setDefaultLoader = function (loader) {
+	    InfiniteScroll._defaultLoader = loader;
+	  };
+	  return InfiniteScroll;
+	};
 
 /***/ }
 ]);

@@ -1,4 +1,14 @@
 /** gou.styl # */
+.layout-center {
+  width: 16rem;
+  margin: 0 auto;
+}
+.align-left {
+  text-align: left;
+}
+.relative {
+  position: relative;
+}
 html {
   height: 100%;
 }
@@ -1375,6 +1385,7 @@ figure.item-pictext .options {
   display: block;
 }
 .connect-error .wrap {
+  display: block;
   padding: 5.7rem 0;
 }
 .connect-error .wrap .pic {
@@ -1670,6 +1681,14 @@ figure.item-pictext .options {
 }
 .icon-praise.on {
   background-image: url("../img/icon-praise-on.png");
+}
+.icon-first-cup {
+  display: inline-block;
+  width: 1.555555555555556rem;
+  height: 1.614814814814815rem;
+  background: url("../img/icon-win-cup.png") 0 0 no-repeat;
+  -webkit-background-size: 100%;
+  background-size: 100%;
 }
 @-moz-keyframes dotLoadingFrame {
   0% {

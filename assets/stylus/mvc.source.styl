@@ -1,5 +1,5 @@
-// @import "nib";
-px(num){ (num/20)*1rem }
+@import "mixins";
+@import "util";
 
 // common
 .ico-list{
@@ -666,20 +666,20 @@ wrapscrolllist {
 
 /****************** 春节专题样式 start **************************/
 
-.spring-day-wrap {
+.activity-theme-wrap {
 	width: px(320);
 	margin: 0 auto;
-	height: px(92);
-	background: url(../img/spring-day-top.jpg) no-repeat 0 0;
+	height: px(96);
+	background: url(../img/activity-theme-header.jpg) no-repeat 0 0;
 	background-size: 100% 100%;
 	position: relative;
 	overflow: hidden;
 	.search {
 		position: absolute;
-		top: px(25);
-		right: px(7);
-		width: px(165);
-		height: px(36);
+		top: px(15);
+		right: px(30);
+		width: px(140);
+		height: px(40);
 	}
 	.nav {
 		display: -webkit-box;
@@ -688,7 +688,7 @@ wrapscrolllist {
 		display: flex;
 		list-style: none;
 		position: absolute;
-		bottom: px(2);
+		bottom: px(6);
 		left: 0;
 		right: 0;
 		li {
@@ -697,7 +697,7 @@ wrapscrolllist {
 			width: 33.333%;
 			-webkit-box-sizing: border-box;
 			box-sizing: border-box;
-			margin: 0 px(5);
+			margin: 0 px(8);
 			a, span {
 				height: px(26.6666);
 				// line-height: px(26.6666);
@@ -708,12 +708,12 @@ wrapscrolllist {
 				text-align: center;
 				font-size: px(14);
 				font-weight: bold;
-				color: #95cc16;
+				color: #f34259;
 			}
 			&.selected {
-				border-bottom: 2px solid #95cc16;
+				border-bottom: 2px solid #6d0a17;
 				a, span {
-					color: #f8b015;
+					color: #6d0a17;
 				}
 			}
 			/*&:nth-of-type(1) {
@@ -762,8 +762,15 @@ wrapscrolllist {
 	}
 	.tj-webapp {
 		> ul {
-			background: url(../img/spring-day-bg.jpg) 0 0 no-repeat;
-			background-size: 100%;
+			background: #8ad6d8;
+			// background: url(../img/spring-day-bg.jpg) 0 0 no-repeat;
+			// background-size: 100%;
+			li:nth-of-type(1), li:nth-of-type(2) {
+				margin-top: 0;
+			}
+			li:nth-of-type(3), li:nth-of-type(4) {
+				margin-bottom: px(4);
+			}
 		}
 	}
 	.amigo-mall {

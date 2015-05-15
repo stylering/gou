@@ -1,9 +1,6 @@
 /** gou.styl # */
-// @import "nib";
-px(num){ (num/20)*1rem }
-border-radius(arguments) {-webkit-border-radius: arguments; border-radius: arguments; }
-box-shadow(arguments) {-webkit-border-radius: arguments; border-radius: arguments; }
-size(w, h) {width: px(w); height: px(h); }
+@import "mixins";
+@import "util";
 
 html{height:100%;}
 body{height:100%; font-size:px(12);/*12 14 16 20*/ color:#656565;}
@@ -768,6 +765,7 @@ figure.item-pictext{
 	position: relative;
 	display: block;
 	.wrap {
+		display: block;
 		padding: px(114) 0;
 		.pic {
 			margin: 0 auto;
@@ -1080,4 +1078,12 @@ figure.item-pictext{
 	&.on {
 		background-image: url(../img/icon-praise-on.png);
 	}
+}
+.icon-first-cup {
+	display: inline-block;
+	width: px1080(105);
+	height: px1080(109);
+	background: url(../img/icon-win-cup.png) 0 0 no-repeat;
+	-webkit-background-size: 100%;
+	background-size: 100%;
 }

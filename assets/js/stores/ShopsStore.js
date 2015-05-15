@@ -3,11 +3,11 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 	EventEmitter = require('events').EventEmitter,
 	assign = require('../common/object-assign');
 
-var ActionTypes = Constants.GameActionTypes;
-var _rankList = [];
+var ActionTypes = Constants.GoodshopActionTypes;
+var _shops = [];
 var CHANGE_EVENT = 'change';
 
-var GameStore = assign({}, EventEmitter.prototype, {
+var ShopsStore = assign({}, EventEmitter.prototype, {
 
 	emitChange: function() {
 		this.emit(CHANGE_EVENT);
@@ -22,19 +22,19 @@ var GameStore = assign({}, EventEmitter.prototype, {
 	},
 
 	getAll: function() {
-		return _rankList;
+		return _shops;
 	}
 
 });
 
-GameStore.dispatcher = AppDispatcher.register(function(action) {
+ShopsStore.dispatcher = AppDispatcher.register(function(action) {
 
 	switch (action.type) {
-		case ActionTypes.RECEIVE_RANK_LIST:
-			_rankList = action.data.list;
-			GameStore.emitChange();
+		case ActionTypes.RECEIVE_SHOPS:
+			_shops = _shops.concat(action.data.list);
+			ShopsStore.emitChange();
 			break;
 	}
 })
 
-module.exports = GameStore;
+module.exports = ShopsStore;

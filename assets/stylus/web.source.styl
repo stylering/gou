@@ -1,5 +1,5 @@
-// @import "nib";
-px(num){ (num/20)*1rem }
+@import "mixins";
+@import "util";
 
 .hd{
 	h1{margin-left:px(10);}
@@ -1618,6 +1618,9 @@ px(num){ (num/20)*1rem }
 			}
 		}
 	}
+}
+// 砍价订单
+.cut-order, .award-record-form {
 	.input-info {
 		width: px(320);
 		margin: 0 auto;
@@ -1629,11 +1632,12 @@ px(num){ (num/20)*1rem }
 			line-height: px(40);
 			padding: 0 px(8);
 			h3 {
+				font-size: px1080(39);
 				float: left;
-				font-size: px(14);
-				color: #888;
+				color: #aaa;
 			}
 			a {
+				font-size: px1080(39);
 				float: right;
 				margin-right: px(8);
 			}
@@ -1642,11 +1646,11 @@ px(num){ (num/20)*1rem }
 			font-size: px(14);
 			line-height: px(36);
 			input {
-				border: 1px solid #d9d9d9;
+				border: 1px solid rgba(0, 0, 0, 0.04);
 				padding: px(8) px(6);
 				width: px(210);
 				color: #444;
-				border-radius(5px);
+				border-radius(3px);
 			}
 			select {
 				width: px(70);
@@ -1678,7 +1682,7 @@ px(num){ (num/20)*1rem }
 	}
 	.btn-wrap {
 		background: #fafafa;
-		border-top: 1px solid #eaeaea;
+		// border-top: 1px solid #eaeaea;
 		padding: px(10) px(8) px(20);
 		.web-btn {
 			margin-bottom: px(8);
@@ -1814,8 +1818,9 @@ px(num){ (num/20)*1rem }
 	margin: 0 auto;
 	max-width: px(320);
 	.pic {
+		display: block;
 		width: px(320);
-		img {
+		img[src$="blank.gif"] {
 			max-height: px(150);
 		}
 	}
@@ -2488,4 +2493,547 @@ px(num){ (num/20)*1rem }
 		line-height: 1.5;
 		color: #8a5220;
 	}
+}
+
+// 新砍价游戏
+.cut-rank-top {
+	padding: px1080(33);
+	background: #fef6d7;
+	.inner {
+		border: px1080(10) solid #fcd436;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+		background: #fcfcfc;
+		padding: px1080(20) px1080(18);
+		overflow: hidden;
+		.period, .date {
+			font-size: px1080(36);
+			color: #42bf9c;
+		}
+		.date {
+			line-height: px1080(45);
+			.timer {
+				display: inline-block;
+				width: px1080(43);
+				height: px1080(43);
+				line-height: 1;
+				background: url(../img/icon-timer.png) 0 0 no-repeat;
+				background-size: 100%;
+				position: relative;
+				top: px1080(8);
+			}
+			text-align: right;
+		}
+		h2 {
+			margin: px1080(20) auto px1080(40);
+			font-size: px1080(48);
+			color: #6a6a6a;
+			text-align: center;
+		}
+	}
+}
+// 游戏排行帮列表
+.cut-rank {
+	.connect-error {
+		.wrap {
+			padding-top: px(40);
+		}
+	}
+}
+.cut-rank-list {
+	background: #42bf9c;
+	color: #fff;
+	text-align: center;
+	.item {
+		height: px1080(135);
+		line-height: px1080(135);
+		font-size: px1080(42);
+		border-bottom: 1px solid #2ea080;
+		&.win {
+			border-bottom: px1080(17) solid #fcd436;
+			color: #ff6734;
+			position: relative;
+			background: #fef6d7;
+			.icon-first-cup {
+				position: absolute;
+				top: px1080(37);
+				left: px1080(68);
+			}
+			.strong {
+				display: inline-block;
+				font-size: px1080(50);
+				color: #fff;
+				padding: 0 px1080(70);
+				height: px1080(90);
+				line-height: px1080(90);
+				background: #ff6734;
+				-webkit-border-radius: 15px;
+				border-radius: 15px;
+			}
+		}
+	}
+	.ellipsis-text {
+		background: #50b498;
+		span {
+			display: inline-block;
+			width: px1080(17);
+			height: px1080(17);
+			-webkit-border-radius: 45px;
+			border-radius: 45px;
+			background: #fff;
+			margin: 0 px1080(15);
+		}
+	}
+	.current {
+		color: #ffe343;
+		position: relative;
+		.circle-text {
+			position: absolute;
+			left: px1080(55);
+			top: 50%;
+			margin-top: px1080(-61);
+			font-size: px1080(30);
+			color: #fff;
+			background: #ff6633;
+			width: px1080(123);
+			height: px1080(123);
+			-webkit-box-shadow: 0 0 0 px1080(8) #fff;
+			box-shadow: 0 0 0 px1080(8) #fff;
+			-webkit-border-radius: 45px;
+			border-radius: 45px;
+			-webkit-transform: rotateZ(-15deg);
+			overflow: hidden;
+		}
+	}
+	ul {
+		display-box();
+/*		-webkit-box-align: center;
+		box-align: center;
+*/		li:nth-of-type(1){
+			width: px1080(240);
+		}
+		li:nth-of-type(2), .flex{
+			-webkit-box-flex: 1;
+			text-align: left;
+		}
+		li:nth-of-type(3){
+			width: px1080(302);
+		}
+	}
+}
+
+.award-record-wrap {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	.award-record-list {
+		padding: px1080(30) px1080(30) 0 px1080(30);
+		position: relative;
+		background: #31cda1;
+		&:last-of-type {
+			padding-bottom: px1080(30);
+		}
+		.go-award-btn {
+			display: block;
+			width: 100%;
+			height: px1080(133);
+			line-height: px1080(133);
+			color: #fff;
+			font-size: px1080(54);
+			text-align: center;
+			background: #ffad33;
+		}
+		.award-info {
+			padding: px1080(30) px1080(30) px1080(40);
+			background: #f5f5f5;
+			border-top: 1px dashed #eaeaea;
+			font-size: px1080(42);
+			color: #888;
+			line-height: 1.3;
+			.info {
+				margin-bottom: px1080(25);
+				span {
+					float: right;
+					margin-right: px1080(30);
+				}
+			}
+		}
+	}
+	.award-box-wrap {
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		display-box();
+		background: #fff;
+		padding: px1080(30);
+		position: relative;
+		.notice {
+			background: url(../img/icon-congrats-winning.png) 0 0 no-repeat;
+			background-size: 100%;
+			width: px1080(164);
+			height: px1080(166);
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.side {
+			width: px1080(300);
+		}
+		.pic {
+			width: px1080(300);
+			height: px1080(300);
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			overflow: hidden;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.main {
+			-webkit-box-flex: 1;
+			box-flex: 1;
+			padding-left: px1080(30);
+			.title {
+				multi-text-ellipsis(2);
+				.period {
+					float: left;
+					margin-right: px1080(27);
+					display: inline-block;
+					padding: px1080(8) px1080(35);
+					// height: px1080(59);
+					// line-height: px1080(59);
+					text-align: center;
+					font-size: px1080(36);
+					color: #888;
+					border: 1px solid #ccc;
+					-webkit-border-radius: 3px;
+					border-radius: 3px;
+				}
+				h1 {
+					color: #444;
+					font-size: px1080(42);
+					line-height: px1080(65.56);
+				}
+			}
+			.score {
+				color: #ff9900;
+				font-size: px1080(51);
+				// line-height: px1080(135);
+				line-height: px1080(90);
+			}
+			.status {
+				color: #aaa;
+				font-size: px1080(39);
+				white-space: nowrap;
+				overflow: hidden;
+				text-align: right;
+				height: px1080(100);
+				position: relative;
+				a {
+					text-align: left;
+					display: block;
+					color: #ff6633;
+				}
+				em {
+					position: absolute;
+					bottom: 0;
+					right: 0;
+					display: block;
+				}
+			}
+		}
+	}
+	.icon-first-cup {
+		width: px1080(53);
+		height: px1080(54);
+		margin-right: px1080(20);
+		position: relative;
+		top: px1080(8);
+	}
+}
+// 砍价游戏活动记录
+.activity-record-status, .activity-record-list {
+	background: #fff;
+}
+.activity-record-status {
+	height: px1080(128);
+	line-height: px1080(128);
+	background: #31cda1;
+	text-align: right;
+	font-size: px1080(48);
+	padding: 0 px1080(35);
+	&, a, span {
+		color: #fcfcfc;
+	}
+	
+}
+// 游戏获奖记录
+.activity-record-list {
+	padding: 0 px1080(35);
+	.flex {
+		display-box();
+		&:last-of-type {
+			.side {
+				padding-bottom: px1080(45);
+			}
+		}
+		.side {
+			width: px1080(323);
+			padding-top: px1080(45);
+			.date {
+				text-align: right;
+				font-size: px1080(36);
+				color: #666;
+				padding: px1080(10) px1080(43) px1080(18) 0;
+			}
+			.pic {
+				width: px1080(280);
+				height: px1080(280);
+				table-cell-middle();
+			}
+			.txt {
+				display: inline-block;
+				position: relative;
+				width: px1080(232);
+				// height: px1080(75);
+				// line-height: px1080(75);
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				background: rgba(0, 0, 0, 0.05);
+				padding: px1080(20) 0 px1080(20) px1080(90);
+				// padding-left: px1080(90);
+				// padding-top: px1080(20)
+				// padding-bottom: px1080(20);
+				margin-top: px1080(28);
+				margin-left: px1080(24);
+				.icon-cup-gray {
+					position: absolute;
+					left: px1080(30);
+					top: px1080(21);
+					display: inline-block;
+					width: px1080(39);
+					height: px1080(37);
+					background: url(../img/icon-cup-gray.png) 0 0 no-repeat
+					background-size: 100%;
+				}
+			}
+		}
+		.main {
+			-webkit-box-flex: 1;
+			box-flex: 1;
+			border-left: 2px solid #efefef;
+			dl {
+				padding-top: px1080(45);
+				padding-bottom: px1080(40);
+				dt, dd {
+					line-height: px1080(65.56);
+					padding-left: px1080(50);
+					position: relative;
+					.circle {
+						display: inline-block;
+						position: absolute;
+					}
+				}
+				dt {
+					color: #444;
+					font-size: px1080(45);
+					margin-bottom: px1080(20);
+					.circle {
+						width: px1080(35);
+						height: px1080(35);
+						background: #ff9900;
+						webkit-border-radius: 45px;
+						border-radius: 45px;
+						left: px1080(-22);
+						top: px1080(15);
+					}
+				}
+				dd {
+					font-size: px1080(36);
+					line-height: px1080(80);
+					color: #aaa;
+					.circle {
+						width: px1080(18);
+						height: px1080(18);
+						background: #baebdd;
+						webkit-border-radius: 45px;
+						border-radius: 45px;
+						left: px1080(-13);
+						top: px1080(35);
+					}
+					.time {
+						margin-right: px1080(38);
+					}
+				}
+			}
+		}
+	}
+}
+// 游戏分享
+.game-share-banner {
+	width: px1080(1080);
+	height: px1080(327);
+	display: block;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+}
+.game-share-content {
+	padding: 0 px1080(30) px1080(60);
+	h1 {
+		padding-top: px1080(60);
+		padding-bottom: px1080(30);
+		font-size: px1080(48);
+		line-height: px1080(65.56);
+		color: #444;
+	}
+	h2 {
+		font-size: px1080(45);
+		line-height: px1080(68);
+		color: #444;
+	}
+	.game-share-list {
+		.title {
+			padding: px1080(30) 0;
+			overflow: hidden;
+		}
+		.period {
+			display: inline-block;
+			color: #666;
+			font-size: px1080(36);
+			// width: px1080(151);
+			padding: px1080(8) px1080(20);
+			// height: px1080(62);
+			// line-height: px1080(60);
+			border: 1px solid #e1e0e0;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			text-align: center;
+			float: left;
+			margin-right: px1080(30);
+		}
+		.price-wrap {
+			font-size: px1080(36);
+			color: #888;
+			padding: px1080(15) 0 px1080(45) 0;
+			em {
+				text-decoration: line-through;
+				margin-right: px1080(75);
+			}
+		}
+		.game-prize {
+			display-box();
+			.main {
+				width: px1080(647);
+				position: relative;
+			}
+			.side {
+				-webkit-box-flex: 1;
+				box-flex: 1;
+				width: px1080(378);
+				height: px1080(648);
+				display: block;
+				position: relative;
+				.text {
+					position: absolute;
+					z-index: 100;
+					top: 50%;
+					left: 50%;
+				}
+				&.finish, &.cheer, &.want {
+					.text {
+						width: px1080(160);
+						height: px1080(182);
+						margin-left: px1080(-80);
+						margin-top: px1080(-91);
+						background: url(../img/game-cheer.png) 0 0 no-repeat;
+						background-size: 100%;
+					}
+				}
+				&.want {
+					background: #ff6633;
+					.text {
+						background-image: url(../img/game-want.png);
+					}
+				}
+				&.finish {
+					background: #bdc3c7;
+				}
+				&.cheer {
+					background: #ff9900;
+				}
+				&.challenge{
+					background: #ff9900;
+					.text {
+						width: px1080(238);
+						height: px1080(77);
+						margin-left: px1080(-119);
+						margin-top: px1080(-38);
+						background: url(../img/game-go-challenge.png) 0 0 no-repeat;
+						background-size: 100%;
+					}
+				}
+			}
+			.pic {
+				width: px1080(647);
+				height: px1080(648);
+				table-cell-middle();
+				img {
+					width: auto;
+					height: auto;
+					max-width: px1080(647);
+					max-height: px1080(648);
+				}
+			}
+			.notice {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: px1080(164);
+				height: px1080(166);
+				background: url(../img/game-current.png) 0 0 no-repeat;
+				background-size: 100%;
+				&.current {
+					background-image: url(../img/game-current.png);
+				}
+				&.next {
+					background-image: url(../img/game-next.png);
+				}
+			}
+			.time {
+				position: absolute;
+				left: px1080(20);
+				bottom: px1080(20);
+				padding: px1080(14) px1080(34);
+				// height: px1080(64);
+				// line-height: px1080(64);
+				color: #fff;
+				font-size: px1080(33);
+				text-align: center;
+				-webkit-border-radius: 45px;
+				border-radius: 45px;
+				background: rgba(0, 0, 0, 0.4);
+				.icon-timer {
+					display: inline-block;
+					width: px1080(37);
+					height: px1080(37);
+					background: url(../img/icon-timer-white.png) 0 0 no-repeat;
+					background-size: 100%;
+					margin-right: px1080(15);
+				}
+			}
+		}
+	}
+}
+// 砍价游戏提示中奖动画
+.game-winning {
+	background: url(../img/game-winning.png) 0 px1080(200) no-repeat;
+	background-size: 100%;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }

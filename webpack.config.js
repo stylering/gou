@@ -11,8 +11,9 @@ var config = {
 		this.module.noParse.push(new RegExp('^' + name + '$'));
 	},
 	entry: {
-		home: './assets/js/module/home.js',
-		game: './assets/js/module/game.js',
+		home: './assets/js/components/Home.react.js',
+		game: './assets/js/components/Game.react.js',
+		goodshop: './assets/js/components/Goodshop.react.js',
 		'lib-commons': ['react', 'zepto', 'object-assign']
 	},
 	output: {

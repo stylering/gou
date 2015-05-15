@@ -1,6 +1,6 @@
 var React = require('react'),
 	zepto = require('zepto'),
-	Rank = require('../components/game/Rank.react')
+	Rank = require('./game/Rank.react')
 	;
 
 React.render(

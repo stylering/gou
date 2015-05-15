@@ -6,7 +6,8 @@
             {
                 "rank": 1,
                 "name": "李白",
-                "expend": "10:54"
+                "expend": "10:54",
+                "win": "true"
             },
             {
                 "rank": 2,
@@ -19,15 +20,13 @@
                 "expend": "10:54"
             },
             {
-            	"isEllipsis": true
-            },
-            {
                 "rank": 100,
                 "name": "李白",
-                "expend": "10:54"
+                "expend": "10:54",
+                "ellipsis-text": true
             },
             {
-            	"isCurrent": true,
+            	"current": true,
             	"rank": 101,
             	"name": "李白",
             	"expend": "10:54"

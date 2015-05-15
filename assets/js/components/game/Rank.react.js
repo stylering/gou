@@ -1,21 +1,9 @@
 var React = require('react'),
 	Header = require('../common/Header.react'),
 	RankTop = require('./RankTop.react'),
-	RankList = require('./RankList.react'),
-	GameStore = require('../../stores/GameStore')
-	;
-
-function getRankState() {
-	return {
-		rankList: GameStore.getRankList()
-	}
-}
+	RankList = require('./RankList.react');
 
 var Rank = React.createClass({
-
-	getInitialState: function() {
-		return getRankState();
-	},
 
 	render: function() {
 		return (
