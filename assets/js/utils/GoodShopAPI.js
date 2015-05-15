@@ -16,9 +16,19 @@ module.exports = {
 		})
 	},
 
-	getShops: function() {
+	getShops: function(args) {
+		args = args || {}
+		var params = {
+			page: 1,
+			tag_id: '',
+			uid: ''
+		};
+		$.extend(params, args);
+		params = $.param(params);
 		$.ajax({
-			url: '/gou/demo/api/goodshop/index.json',
+			url: '/gou/demo/api/goodshop/index.json?' + params,
+			type: 'GET',
+			// data: params,
 			dataType: 'JSON',
 			success: function(result) {
 				result = utils.parse(result);

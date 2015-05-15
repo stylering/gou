@@ -19,16 +19,13 @@ var Shops = React.createClass({
 
 	render: function() {
 		var i = 0;
-		var loadFunc = function() {
-			console.log(++i);
-		}
 
 		var shops = this.state.shops;
 
 		return (
 			<InfiniteScroll
 				pageStart="0"
-				loadMore={loadFunc}
+				loadMore={getShops}
 				hasMore={true}
 				loader={<div className="loader">loading...</div>}>
 			
