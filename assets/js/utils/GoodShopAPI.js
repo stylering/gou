@@ -1,4 +1,5 @@
-var utils = require('../common/utils');
+var React = require('react');
+var utils = require('../common/utils')(React);
 var GoodshopAction = require('../actions/GoodShopAction');
 
 module.exports = {
@@ -26,10 +27,10 @@ module.exports = {
 		$.extend(params, args);
 		params = $.param(params);
 		$.ajax({
-			url: '/gou/demo/api/goodshop/index.json?' + params,
+			url: '/gou/demo/api/goodshop/index.php?' + params,
 			type: 'GET',
 			// data: params,
-			dataType: 'JSON',
+			// dataType: 'JSON',
 			success: function(result) {
 				result = utils.parse(result);
 				if (result.success) {

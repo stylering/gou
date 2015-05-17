@@ -21272,7 +21272,7 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(12).Dispatcher;
+	var Dispatcher = __webpack_require__(13).Dispatcher;
 
 	module.exports = new Dispatcher();
 
@@ -21280,7 +21280,7 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(13).EventEmitter;
+	var EventEmitter = __webpack_require__(12).EventEmitter;
 
 	module.exports = EventEmitter;
 
@@ -21320,89 +21320,138 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
+	module.exports = function(React){
+		return {
+			parse: function (args) {
+				try {
+					return JSON.parse(args);
+				} catch (e) {
+					return args;
+				}
+			},
 
-		parse: function (args) {
-			try {
-				return JSON.parse(args);
-			} catch (e) {
-				return args;
+			stringify: function(args) {
+				return JSON.stringify(args);
+			},
+
+			// 底部toast提示
+			showTip: function(msg) {
+				var body = $('body'),
+					tip = body.find('.J_msgTip');
+
+				if(tip[0]){
+					tip.html(msg);
+					tip.parent().show();
+				} else {
+					body.append('<div class="msg-tip"><span class="J_msgTip">'+msg+'</span></div>');
+					tip = body.find('.J_msgTip');
+				}
+
+				setTimeout(function(){
+					tip.parent().hide();//fixed bug: 行内元素居然不起作用。。。
+				}, 3000);
 			}
-		},
-
-		stringify: function(args) {
-			return JSON.stringify(args);
 		}
-
 	}
 
 /***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	function topPosition(domElt) {
-	  if (!domElt) {
-	    return 0;
-	  }
-	  return domElt.offsetTop + topPosition(domElt.offsetParent);
+	var Toast = __webpack_require__(19);
+
+	function topPosition(elem) {
+	    if (!elem) {
+	        return 0;
+	    }
+	    return elem.offsetTop + topPosition(elem.offsetParent);
 	}
 
-	module.exports = function (React) {
-	  if (React.addons && React.addons.InfiniteScroll) {
-	    return React.addons.InfiniteScroll;
-	  }
-	  React.addons = React.addons || {};
-	  var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({displayName: "React.addons.InfiniteScroll",
-	    getDefaultProps: function () {
-	      return {
-	        pageStart: 0,
-	        hasMore: false,
-	        loadMore: function () {},
-	        threshold: 250
-	      };
-	    },
-	    componentDidMount: function () {
-	      this.pageLoaded = this.props.pageStart;
-	      this.attachScrollListener();
-	    },
-	    componentDidUpdate: function () {
-	      this.attachScrollListener();
-	    },
-	    render: function () {
-	      var props = this.props;
-	      return React.DOM.div(null, props.children, props.hasMore && (props.loader || InfiniteScroll._defaultLoader));
-	    },
-	    scrollListener: function () {
-	      var el = this.getDOMNode();
-	      var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-	      if (topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold)) {
-	        this.detachScrollListener();
-	        // call loadMore after detachScrollListener to allow
-	        // for non-async loadMore functions
-	        this.props.loadMore(this.pageLoaded += 1);
-	      }
-	    },
-	    attachScrollListener: function () {
-	      if (!this.props.hasMore) {
-	        return;
-	      }
-	      window.addEventListener('scroll', this.scrollListener);
-	      window.addEventListener('resize', this.scrollListener);
-	      this.scrollListener();
-	    },
-	    detachScrollListener: function () {
-	      window.removeEventListener('scroll', this.scrollListener);
-	      window.removeEventListener('resize', this.scrollListener);
-	    },
-	    componentWillUnmount: function () {
-	      this.detachScrollListener();
+	module.exports = function(React) {
+	    if (React.addons && React.addons.InfiniteScroll) {
+	        return React.addons.InfiniteScroll;
 	    }
-	  });
-	  InfiniteScroll.setDefaultLoader = function (loader) {
-	    InfiniteScroll._defaultLoader = loader;
-	  };
-	  return InfiniteScroll;
-	};
+
+	    React.addons = React.addons || {};
+
+	    var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({displayName: "React.addons.InfiniteScroll",
+	        
+	        getInitialState: function() {
+	            return {
+	                msg: ''
+	            }
+	        },
+
+	        getDefaultProps: function() {
+	            return {
+	                page: 0,
+	                hasnext: false,
+	                loadMore: function() {},
+	                threshold: 0,
+	                loading: '努力加载中...',
+	                loaded: '没有更多了'
+	            }
+	        },
+
+	        componentDidMount: function() {
+	            this.attachScrollListener();
+	        },
+
+	        componentDidUpdate: function() {
+	            this.attachScrollListener();
+	        },
+
+	        render: function() {
+	            var props = this.props;
+	            // return React.DOM.div(null, props.children, props.hasnext && (props.loading || InfiniteScroll._defaultLoading));
+	            return (
+	                React.createElement("div", null, 
+	                    props.children, 
+	                    React.createElement(Toast, {msg: this.state.msg})
+	                )
+	            )
+	        },
+
+	        scrollListener: function() {
+	            var el = this.getDOMNode();
+	            var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset 
+	                : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+	            var isLoad = topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold);
+	            if (isLoad) {
+	                this.detachScrollListener();
+	                this.props.loadMore();
+	            }
+	        },
+
+	        attachScrollListener: function() {
+	            var props = this.props;
+	            if (!props.hasnext) {
+	                console.log('11111')
+	                this.state.msg = props.loaded;
+	                return;
+	            }
+	            this.state.msg = props.loading;
+	            window.addEventListener('scroll', this.scrollListener);
+	            window.addEventListener('resize', this.scrollListener);
+	            this.scrollListener();
+	        },
+
+	        detachScrollListener: function() {
+	            window.removeEventListener('scroll', this.scrollListener);
+	            window.removeEventListener('resize', this.scrollListener);
+	        },
+
+	        componentWillUnmount: function() {
+	            this.detachScrollListener();
+	        }
+	    });
+
+	    InfiniteScroll.setDefaultLoading = function (loading) {
+	        InfiniteScroll._defaultLoading = loading;
+	    }
+
+	    return InfiniteScroll;
+	}
 
 /***/ },
 /* 8 */,
@@ -21410,22 +21459,6 @@
 /* 10 */,
 /* 11 */,
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	module.exports.Dispatcher = __webpack_require__(19)
-
-
-/***/ },
-/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -21732,12 +21765,60 @@
 
 
 /***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	module.exports.Dispatcher = __webpack_require__(20)
+
+
+/***/ },
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	var Toast = React.createClass({displayName: "Toast",
+
+		getDefaultProps: function() {
+			msg: ''
+		},
+
+		componentDidUpdate: function() {
+			var el = this.getDOMNode();
+			el.style.display = 'block';
+			setTimeout(function() {
+				el.style.display = 'none';
+			}, 5000);
+		},
+
+		render: function() {
+			return (
+				React.createElement("div", {className: "msg-tip"}, 
+					React.createElement("span", null, this.props.msg)
+				)
+			);
+		}
+
+	})
+
+	module.exports = Toast;
+
+/***/ },
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21754,7 +21835,7 @@
 
 	"use strict";
 
-	var invariant = __webpack_require__(25);
+	var invariant = __webpack_require__(26);
 
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -21993,12 +22074,12 @@
 
 
 /***/ },
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

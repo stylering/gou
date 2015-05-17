@@ -130,33 +130,61 @@ webpackJsonp([3],[
 	var ShopsStore = __webpack_require__(18);
 	var GoodShopAPI = __webpack_require__(17);
 	var InfiniteScroll = __webpack_require__(7)(React);
+	var Toast = __webpack_require__(19);
 
-	GoodShopAPI.getShops();
+	// page: 1,
+	// uid: ''
+	// tag_id: '',
+	function getShopsFromServer(args) {
+		GoodShopAPI.getShops(args);
+	}
+
+	// getShopsFromServer();
 
 	function getShops() {
+		var shops = ShopsStore.getAll();
 		return {
-			shops: ShopsStore.getAll()
+			shops: shops.list,
+			hasnext: shops.hasnext,
+			page: shops.curpage
 		}
 	}
 
 	var Shops = React.createClass({displayName: "Shops",
 
 		getInitialState: function() {
-			return getShops();
+			getShops();
+			return {
+				shops: [],
+				hasnext: true,
+				page: 0
+			}
+		},
+
+		loadMore: function() {
+			getShopsFromServer({
+				page: this.state.page + 1
+			})
+		},
+
+		componentDidMount: function() {
+			ShopsStore.addChangeListener(this._onChange);
+		},
+
+		componentWillUnmount: function() {
+			ShopsStore.removeChangeListener(this._onChange);
 		},
 
 		render: function() {
 			var i = 0;
-
 			var shops = this.state.shops;
-
 			return (
 				React.createElement(InfiniteScroll, {
-					pageStart: "0", 
-					loadMore: getShops, 
-					hasMore: true, 
-					loader: React.createElement("div", {className: "loader"}, "loading...")}, 
-				
+					threshold: "10", 
+					loadMore: this.loadMore, 
+					hasnext: this.state.hasnext
+					// loading={<div className="msg-tip"><span>努力加载中...</span></div>}
+					}, 
 					shops.map(function(shop){
 						return (
 							React.createElement("div", {className: "goodshop"}, 
@@ -187,16 +215,13 @@ webpackJsonp([3],[
 			)
 		},
 
-		componentDidMount: function() {
-			ShopsStore.addChangeListener(this._onChange);
-		},
-
-		componentWillUnmount: function() {
-			ShopsStore.removeChangeListener(this._onChange);
-		},
-
 		_onChange: function() {
-			this.setState(getShops());
+			var data = getShops();
+			this.setState({
+				shops: this.state.shops.concat(data.shops),
+				hasnext: data.hasnext,
+				page: data.page
+			})
 		}
 	})
 
@@ -211,8 +236,8 @@ webpackJsonp([3],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(22),
-		EventEmitter = __webpack_require__(13).EventEmitter,
+		Constants = __webpack_require__(23),
+		EventEmitter = __webpack_require__(12).EventEmitter,
 		assign = __webpack_require__(5);
 
 	var ActionTypes = Constants.GoodshopActionTypes;
@@ -255,8 +280,9 @@ webpackJsonp([3],[
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var utils = __webpack_require__(6);
-	var GoodshopAction = __webpack_require__(23);
+	var React = __webpack_require__(1);
+	var utils = __webpack_require__(6)(React);
+	var GoodshopAction = __webpack_require__(24);
 
 	module.exports = {
 
@@ -283,10 +309,10 @@ webpackJsonp([3],[
 			$.extend(params, args);
 			params = $.param(params);
 			$.ajax({
-				url: '/gou/demo/api/goodshop/index.json?' + params,
+				url: '/gou/demo/api/goodshop/index.php?' + params,
 				type: 'GET',
 				// data: params,
-				dataType: 'JSON',
+				// dataType: 'JSON',
 				success: function(result) {
 					result = utils.parse(result);
 					if (result.success) {
@@ -302,12 +328,12 @@ webpackJsonp([3],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(22),
-		EventEmitter = __webpack_require__(13).EventEmitter,
+		Constants = __webpack_require__(23),
+		EventEmitter = __webpack_require__(12).EventEmitter,
 		assign = __webpack_require__(5);
 
 	var ActionTypes = Constants.GoodshopActionTypes;
-	var _shops = [];
+	var _shops = {};
 	var CHANGE_EVENT = 'change';
 
 	var ShopsStore = assign({}, EventEmitter.prototype, {
@@ -334,7 +360,7 @@ webpackJsonp([3],[
 
 		switch (action.type) {
 			case ActionTypes.RECEIVE_SHOPS:
-				_shops = _shops.concat(action.data.list);
+				_shops = action.data;
 				ShopsStore.emitChange();
 				break;
 		}
@@ -346,10 +372,11 @@ webpackJsonp([3],[
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keyMirror = __webpack_require__(26);
+	var keyMirror = __webpack_require__(27);
 
 	module.exports = {
 
@@ -365,11 +392,11 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(22)
+		Constants = __webpack_require__(23)
 		;
 
 	var ActionTypes = Constants.GoodshopActionTypes;
@@ -394,9 +421,9 @@ webpackJsonp([3],[
 	}
 
 /***/ },
-/* 24 */,
 /* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keyMirror = function(obj) {

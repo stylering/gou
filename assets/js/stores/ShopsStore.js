@@ -4,7 +4,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 	assign = require('../common/object-assign');
 
 var ActionTypes = Constants.GoodshopActionTypes;
-var _shops = [];
+var _shops = {};
 var CHANGE_EVENT = 'change';
 
 var ShopsStore = assign({}, EventEmitter.prototype, {
@@ -31,7 +31,7 @@ ShopsStore.dispatcher = AppDispatcher.register(function(action) {
 
 	switch (action.type) {
 		case ActionTypes.RECEIVE_SHOPS:
-			_shops = _shops.concat(action.data.list);
+			_shops = action.data;
 			ShopsStore.emitChange();
 			break;
 	}

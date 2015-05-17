@@ -2,33 +2,61 @@ var React = require('react');
 var ShopsStore = require('../../stores/ShopsStore');
 var GoodShopAPI = require('../../utils/GoodShopAPI');
 var InfiniteScroll = require('../../common/react-infinite-scroll')(React);
+var Toast = require('../common/Toast.react');
 
-GoodShopAPI.getShops();
+// page: 1,
+// uid: ''
+// tag_id: '',
+function getShopsFromServer(args) {
+	GoodShopAPI.getShops(args);
+}
+
+// getShopsFromServer();
 
 function getShops() {
+	var shops = ShopsStore.getAll();
 	return {
-		shops: ShopsStore.getAll()
+		shops: shops.list,
+		hasnext: shops.hasnext,
+		page: shops.curpage
 	}
 }
 
 var Shops = React.createClass({
 
 	getInitialState: function() {
-		return getShops();
+		getShops();
+		return {
+			shops: [],
+			hasnext: true,
+			page: 0
+		}
+	},
+
+	loadMore: function() {
+		getShopsFromServer({
+			page: this.state.page + 1
+		})
+	},
+
+	componentDidMount: function() {
+		ShopsStore.addChangeListener(this._onChange);
+	},
+
+	componentWillUnmount: function() {
+		ShopsStore.removeChangeListener(this._onChange);
 	},
 
 	render: function() {
 		var i = 0;
-
 		var shops = this.state.shops;
-
 		return (
 			<InfiniteScroll
-				pageStart="0"
-				loadMore={getShops}
-				hasMore={true}
-				loader={<div className="loader">loading...</div>}>
-			
+				threshold="10"
+				loadMore={this.loadMore}
+				hasnext={this.state.hasnext}
+				// loading={<div className="msg-tip"><span>努力加载中...</span></div>}
+				>
 				{shops.map(function(shop){
 					return (
 						<div className="goodshop">
@@ -59,16 +87,13 @@ var Shops = React.createClass({
 		)
 	},
 
-	componentDidMount: function() {
-		ShopsStore.addChangeListener(this._onChange);
-	},
-
-	componentWillUnmount: function() {
-		ShopsStore.removeChangeListener(this._onChange);
-	},
-
 	_onChange: function() {
-		this.setState(getShops());
+		var data = getShops();
+		this.setState({
+			shops: this.state.shops.concat(data.shops),
+			hasnext: data.hasnext,
+			page: data.page
+		})
 	}
 })
 

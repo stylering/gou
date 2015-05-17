@@ -1,5 +1,6 @@
+var React = require('react');
 var GameAction = require('../actions/GameAction');
-var utils = require('../common/utils');
+var utils = require('../common/utils')(React);
 
 module.exports = {
 

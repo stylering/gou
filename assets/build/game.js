@@ -106,8 +106,8 @@ webpackJsonp([1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
-		GameAPI = __webpack_require__(20),
-		GameStore = __webpack_require__(21);
+		GameAPI = __webpack_require__(21),
+		GameStore = __webpack_require__(22);
 
 	GameAPI.getRankList();
 
@@ -208,11 +208,13 @@ webpackJsonp([1],[
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var GameAction = __webpack_require__(24);
-	var utils = __webpack_require__(6);
+	var React = __webpack_require__(1);
+	var GameAction = __webpack_require__(25);
+	var utils = __webpack_require__(6)(React);
 
 	module.exports = {
 
@@ -231,12 +233,12 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(22),
-		EventEmitter = __webpack_require__(13).EventEmitter,
+		Constants = __webpack_require__(23),
+		EventEmitter = __webpack_require__(12).EventEmitter,
 		assign = __webpack_require__(5);
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -276,10 +278,10 @@ webpackJsonp([1],[
 	module.exports = GameStore;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keyMirror = __webpack_require__(26);
+	var keyMirror = __webpack_require__(27);
 
 	module.exports = {
 
@@ -295,12 +297,12 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(22)
+		Constants = __webpack_require__(23)
 		;
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -317,8 +319,8 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keyMirror = function(obj) {
