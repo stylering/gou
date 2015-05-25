@@ -13,6 +13,7 @@ var config = {
 	entry: {
 		home: './assets/js/components/Home.react.js',
 		game: './assets/js/components/Game.react.js',
+		router: './assets/js/components/Router.react.js',
 		goodshop: './assets/js/components/Goodshop.react.js',
 		'lib-commons': []
 	},
@@ -38,6 +39,7 @@ var config = {
 // 公用框架与工具
 config.addVendor('react', bower_dir + '/react/react.js');
 config.addVendor('zepto', bower_dir + '/zepto/zepto.js');
+config.addVendor('react-router', bower_dir + '/react-router/build/umd/ReactRouter.js');
 config.addVendor('dispatcher', './assets/js/dispatcher/AppDispatcher.js');
 config.addVendor('EventEmitter', './assets/js/common/EventEmitter.js');
 config.addVendor('object-assign', './assets/js/common/object-assign.js');

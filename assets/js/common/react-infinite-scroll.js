@@ -14,6 +14,8 @@ module.exports = function(React) {
 
     React.addons = React.addons || {};
 
+    var msg = '';
+
     var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({
         
         getInitialState: function() {
@@ -24,10 +26,9 @@ module.exports = function(React) {
 
         getDefaultProps: function() {
             return {
-                page: 0,
                 hasnext: false,
                 loadMore: function() {},
-                threshold: 0,
+                threshold: 10,
                 loading: '努力加载中...',
                 loaded: '没有更多了'
             }
@@ -37,40 +38,60 @@ module.exports = function(React) {
             this.attachScrollListener();
         },
 
-        componentDidUpdate: function() {
+        /*componentDidUpdate: function() {
             this.attachScrollListener();
-        },
+        },*/
 
         render: function() {
             var props = this.props;
+            var toast;
             // return React.DOM.div(null, props.children, props.hasnext && (props.loading || InfiniteScroll._defaultLoading));
+            if (this.state.open) {
+                toast = <Toast isOpen={true} msg={this.state.msg}/>
+            }
             return (
                 <div>
                     {props.children}
-                    <Toast msg={this.state.msg} />
+                    {toast}
                 </div>
             )
         },
 
         scrollListener: function() {
             var el = this.getDOMNode();
+            var props;
             var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset 
                 : (document.documentElement || document.body.parentNode || document.body).scrollTop;
             var isLoad = topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < Number(this.props.threshold);
             if (isLoad) {
-                this.detachScrollListener();
+                // this.detachScrollListener();
+                var props = this.props;
+                console.log(props)
+                if (!props.hasnext) {
+                    this.showMsg(props.loaded);
+                    return;
+                }
+                if (props.page+1 > 1) {
+                    this.showMsg(props.loading);
+                }
                 this.props.loadMore();
             }
         },
 
+        showMsg: function(msg) {
+            this.setState({
+                msg: msg,
+                open: true
+            })
+        },
+
+        hideMsg: function() {
+            this.setState({
+                open: false
+            })
+        },
+
         attachScrollListener: function() {
-            var props = this.props;
-            if (!props.hasnext) {
-                console.log('11111')
-                this.state.msg = props.loaded;
-                return;
-            }
-            this.state.msg = props.loading;
             window.addEventListener('scroll', this.scrollListener);
             window.addEventListener('resize', this.scrollListener);
             this.scrollListener();

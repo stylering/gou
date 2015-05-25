@@ -1,25 +1,30 @@
 var React = require('react');
 var Header = require('./common/Header.react');
-var Tags = require('./goodshop/Tags.react');
 var Shops = require('./goodshop/Shops.react');
+var Router = require('react-router');
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+var DefaultRoute = Router.DefaultRoute;
 
 var GoodShop = React.createClass({
 	render: function() {
 		return (
 			<div className="module">
 				<Header title="排行榜" href="/" />
-				<section className="layout-center">
-					<Tags />
-				</section>
-				<section className="layout-center">
-					<Shops />
-				</section>
+				<RouteHandler />
 			</div>
 		)
 	}
-})
+});
 
-React.render(
-	<GoodShop />,
-	document.getElementsByTagName('body')[0]
-)
+var routes = (
+	<Route path="/" handler={GoodShop}>
+		<DefaultRoute handler={Shops} />
+		<Route path="/:id" handler={Shops} />
+	</Route>
+);
+
+Router.run(routes, Router.HashLocation, function(Handler) {
+	React.render(<Handler />, document.body)
+});
+

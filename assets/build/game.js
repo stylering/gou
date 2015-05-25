@@ -1,10 +1,10 @@
-webpackJsonp([1],[
+webpackJsonp([3],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1),
 		zepto = __webpack_require__(2),
-		Rank = __webpack_require__(8)
+		Rank = __webpack_require__(12)
 		;
 
 	React.render(
@@ -20,34 +20,7 @@ webpackJsonp([1],[
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1),
-		Header = __webpack_require__(9),
-		RankTop = __webpack_require__(14),
-		RankList = __webpack_require__(15);
-
-	var Rank = React.createClass({displayName: "Rank",
-
-		render: function() {
-			return (
-				React.createElement("div", {className: "module"}, 
-					React.createElement(Header, {title: "排行榜", href: "/"}), 
-					React.createElement("section", {className: "layout-center"}, 
-						React.createElement(RankTop, null)
-					), 
-					React.createElement("section", {className: "layout-center"}, 
-						React.createElement(RankList, null)
-					)
-				)
-			)
-		}
-	})
-
-	module.exports = Rank;
-
-/***/ },
+/* 8 */,
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -74,9 +47,41 @@ webpackJsonp([1],[
 /***/ },
 /* 10 */,
 /* 11 */,
-/* 12 */,
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1),
+		Header = __webpack_require__(9),
+		RankTop = __webpack_require__(19),
+		RankList = __webpack_require__(20);
+
+	var Rank = React.createClass({displayName: "Rank",
+
+		render: function() {
+			return (
+				React.createElement("div", {className: "module"}, 
+					React.createElement(Header, {title: "排行榜", href: "/"}), 
+					React.createElement("section", {className: "layout-center"}, 
+						React.createElement(RankTop, null)
+					), 
+					React.createElement("section", {className: "layout-center"}, 
+						React.createElement(RankList, null)
+					)
+				)
+			)
+		}
+	})
+
+	module.exports = Rank;
+
+/***/ },
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
@@ -102,12 +107,12 @@ webpackJsonp([1],[
 	module.exports = RankTop;
 
 /***/ },
-/* 15 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1)
-		GameAPI = __webpack_require__(21),
-		GameStore = __webpack_require__(22);
+		GameAPI = __webpack_require__(24),
+		GameStore = __webpack_require__(25);
 
 	GameAPI.getRankList();
 
@@ -204,16 +209,14 @@ webpackJsonp([1],[
 	module.exports = RankList;
 
 /***/ },
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GameAction = __webpack_require__(25);
+	var GameAction = __webpack_require__(31);
 	var utils = __webpack_require__(6)(React);
 
 	module.exports = {
@@ -233,12 +236,12 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(23),
-		EventEmitter = __webpack_require__(12).EventEmitter,
+		Constants = __webpack_require__(28),
+		EventEmitter = __webpack_require__(14).EventEmitter,
 		assign = __webpack_require__(5);
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -278,10 +281,12 @@ webpackJsonp([1],[
 	module.exports = GameStore;
 
 /***/ },
-/* 23 */
+/* 26 */,
+/* 27 */,
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keyMirror = __webpack_require__(27);
+	var keyMirror = __webpack_require__(32);
 
 	module.exports = {
 
@@ -297,12 +302,13 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 24 */,
-/* 25 */
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(3),
-		Constants = __webpack_require__(23)
+		Constants = __webpack_require__(28)
 		;
 
 	var ActionTypes = Constants.GameActionTypes;
@@ -319,8 +325,7 @@ webpackJsonp([1],[
 	}
 
 /***/ },
-/* 26 */,
-/* 27 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var keyMirror = function(obj) {

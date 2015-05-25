@@ -6,23 +6,9 @@ GoodShopAPI.getTags();
 
 function getTags() {
 	return {
-		tags: TagsStore.getAll()
+		tags: TagsStore.getAll(),
 	}
 }
-
-function tagsIterator(tag) {
-	return (
-		<Tag tag={tag} />
-	)
-}
-
-var Tag = React.createClass({
-	render: function() {
-		return (
-			<li><a href="javascipt:void(0);">{this.props.tag}</a></li>
-		)
-	}
-});
 
 var Tags = React.createClass({
 
@@ -31,11 +17,14 @@ var Tags = React.createClass({
 	},
 
 	render: function() {
-		var tags = this.state.tags.map(tagsIterator);
+		var id = this.props.id;
 		return (
 			<div className="slide-tab-box">
 				<ul id="J_slideTab" className="slide-tab">
-					{tags}
+					<li className={ id==''? 'active' : '' }><a href="#/">全部</a></li>
+					{this.state.tags.map(function(tag) {
+						return <li className={ tag.id == id ? 'active' : '' }><a href={'#'+tag.id}>{tag.name}</a></li>
+					})}
 				</ul>
 			</div>
 		)

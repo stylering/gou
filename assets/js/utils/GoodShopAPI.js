@@ -20,11 +20,10 @@ module.exports = {
 	getShops: function(args) {
 		args = args || {}
 		var params = {
-			page: 1,
-			tag_id: '',
+			page: args.page || 1,
+			tag_id:  args.id || '',
 			uid: ''
 		};
-		$.extend(params, args);
 		params = $.param(params);
 		$.ajax({
 			url: '/gou/demo/api/goodshop/index.php?' + params,
